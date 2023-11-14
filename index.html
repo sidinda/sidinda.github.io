@@ -15,6 +15,48 @@
     <!-- Font Awesome Css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
  
+ <style>
+        /* Add CSS style to initially hide the iframe */
+        #myIframe {
+            display: none;
+        }
+    </style>
+
+    <script>
+        function submitFormAndOpenIframe() {
+			
+			var scriptURL = 'https://script.google.com/macros/s/AKfycbzg4L-91EotVDcNveKnwvq_NJvMJ4XPYSEMlbMtvIt1BbVLdZDXnGMrmtt37ChcEjhs/exec';
+ 
+			var form = document.getElementById('myForm');
+			var formData = new FormData(form);
+		
+            // Get the form data
+            var nopValue = document.getElementById('nopInput').value;
+
+            // Construct the URL with the appended "nop" value
+            var url = 'http://e-pbb.bekasikota.go.id/detail_op.php?nop=' + nopValue;
+
+            // Update the iframe source
+            document.getElementById('myIframe').src = url;
+
+            // Show the iframe
+            document.getElementById('myIframe').style.display = 'block';
+
+            // Use the fetch API to send the form data to the Google Apps Script endpoint
+    fetch(scriptURL, { method: 'POST', body: formData })
+        .then(response => {
+            // Do nothing on success, just proceed with the rest of your code
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Error sending form data:', error);
+        });
+			
+			
+
+        }
+    </script>
+ 
 </head>
 <body>
     
@@ -55,24 +97,39 @@
 <!-- booking form section starts -->
 <section class="book-form" id="book-form">
 
-    <form action="">
-        <div class="inputBox" data-aos="zoom-in" data-aos-delay="150">
-            <span>Kelurahan</span>
-            <input type="text" value="" placeholder="place now">
-        </div>
+    <form id="myForm" method="POST" action="https://script.google.com/macros/s/AKfycbzg4L-91EotVDcNveKnwvq_NJvMJ4XPYSEMlbMtvIt1BbVLdZDXnGMrmtt37ChcEjhs/exec" onsubmit="submitFormAndOpenIframe()">
         <div class="inputBox" data-aos="zoom-in" data-aos-delay="300">
-            <span>Tahun</span>
-            <input type="date" value="" placeholder="dd-mm-yyyy">
+            <span>Tanggal Cek</span>
+            <input type="date" id="myDateInput" placeholder="Select a date">
+        </div>
+		<div class="inputBox" data-aos="zoom-in" data-aos-delay="150">
+            <span>Kelurahan</span>
+            <input name="kelurahan" type="text" value="Kelurahan Jatisari" placeholder="place now" disable>
         </div>
         <div class="inputBox" data-aos="zoom-in" data-aos-delay="450">
-            <span>NOP</span>
-            <input type="number" value="" placeholder="number of travelers">
-        </div>
-        <input type="submit" value="find now" class="btn" data-aos="zoom-in" data-aos-delay="600"  >
-    </form>
+                <span>NOP</span>
+                <input id="nopInput" name="nop" type="number" value="" placeholder="Nomor Objek Pajak (Tanpa Titik)">
+            </div>
+
+            <!-- Add a call to the new JavaScript function on button click -->
+            <input type="button" value="Cek Sekarang" class="btn" data-aos="zoom-in" data-aos-delay="600" onclick="submitFormAndOpenIframe()">
+        </form>
+
+<script>
+  // Get the current date in the 'YYYY-MM-DD' format
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  // Set the current date as the default value for the date input
+  document.getElementById('myDateInput').value = currentDate;
+</script>
+
+
+</br>
+<iframe src="about:blank" frameborder="0" width="100%" height="500" id="myIframe"></iframe>
 
 </section>
 <!-- booking form section ends -->
+
 
 
 <!-- About Section start -->
@@ -170,7 +227,7 @@
         <div class="box" data-aos="fade-up-right" data-aos-delay="150">
             <i class="fas fa-globe"></i>
             <h3>Fasilitasi</h3>
-            <p>Layani masyarakat secara optimal baik secara daring maupun luring melalui aplikasi SIDINDA PBB Kelurahan Jaisari Kecamatan Jatiasih Kota Bekasi.</p>
+            <p>Layani masyarakat secara optimal baik secara daring maupun luring melalui aplikasi SIDINDA PBB Kelurahan Jatisari Kecamatan Jatiasih Kota Bekasi.</p>
         </div>
         <div class="box" data-aos="fade-up" data-aos-delay="150">
             <i class="fas fa-hiking"></i>
@@ -186,7 +243,7 @@
         <div class="box" data-aos="fade-up-left" data-aos-delay="150">
             <i class="fas fa-headset"></i>
             <h3>Berikan Solusi</h3>
-            <p>Berikan solusi terbaik baik secara daring maupun luring kepada seluruh masyarakat Kelurahan Jaisari Kecamatan Jatiasih Kota Bekasi melalui aplikasi SIDINDA PBB agar mewujudkan pelayanan prima terhadap masyarakat.</p>
+            <p>Berikan solusi terbaik baik secara daring maupun luring kepada seluruh masyarakat Kelurahan Jatisari Kecamatan Jatiasih Kota Bekasi melalui aplikasi SIDINDA PBB agar mewujudkan pelayanan prima terhadap masyarakat.</p>
         </div>
     </div>
 </section>
