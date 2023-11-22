@@ -23,38 +23,21 @@
     </style>
 
     <script>
-        function submitFormAndOpenIframe() {
-			
-			var scriptURL = 'https://script.google.com/macros/s/AKfycbzg4L-91EotVDcNveKnwvq_NJvMJ4XPYSEMlbMtvIt1BbVLdZDXnGMrmtt37ChcEjhs/exec';
- 
-			var form = document.getElementById('myForm');
-			var formData = new FormData(form);
-		
-            // Get the form data
-            var nopValue = document.getElementById('nopInput').value;
+        function submitForm() {
+  var tanggal = document.getElementById("tanggal").value;
+  var kelurahan = document.getElementById("kelurahan").value;
+  var nop = document.getElementById("nop").value;
 
-            // Construct the URL with the appended "nop" value
-            var url = 'http://e-pbb.bekasikota.go.id/detail_op.php?nop=' + nopValue;
+  var baseUrl = "https://script.google.com/macros/s/AKfycbx5vgqwpV3cr2GCfamd93p1oAK0wcGbsKAZHqkdFS1vtUDdH2De_Gs4sfdck3fHquFRKg/exec";
+  var url = "http://e-pbb.bekasikota.go.id/detail_op.php?nop=" + encodeURIComponent(nop);
 
-            // Update the iframe source
-            document.getElementById('myIframe').src = url;
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", baseUrl, true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.send("tanggal=" + encodeURIComponent(tanggal) + "&kelurahan=" + encodeURIComponent(kelurahan) + "&nop=" + encodeURIComponent(nop));
 
-            // Show the iframe
-            document.getElementById('myIframe').style.display = 'block';
-
-            // Use the fetch API to send the form data to the Google Apps Script endpoint
-    fetch(scriptURL, { method: 'POST', body: formData })
-        .then(response => {
-            // Do nothing on success, just proceed with the rest of your code
-        })
-        .catch(error => {
-            // Handle any errors that occurred during the fetch
-            console.error('Error sending form data:', error);
-        });
-			
-			
-
-        }
+  window.location.href = url;
+}
     </script>
  
 </head>
@@ -97,22 +80,22 @@
 <!-- booking form section starts -->
 <section class="book-form" id="book-form">
 
-    <form id="myForm" method="POST" action="https://script.google.com/macros/s/AKfycbzg4L-91EotVDcNveKnwvq_NJvMJ4XPYSEMlbMtvIt1BbVLdZDXnGMrmtt37ChcEjhs/exec" onsubmit="submitFormAndOpenIframe()">
+    <form id="myForm">
         <div class="inputBox" data-aos="zoom-in" data-aos-delay="300">
             <span>Tanggal Cek</span>
-            <input type="date" id="myDateInput" placeholder="Select a date">
+            <input type="date" id="tanggal" name="tanggal" placeholder="Select a date">
         </div>
 		<div class="inputBox" data-aos="zoom-in" data-aos-delay="150">
             <span>Kelurahan</span>
-            <input name="kelurahan" type="text" value="Kelurahan Jatisari" placeholder="place now" disable>
+            <input name="kelurahan" id="kelurahan" type="text" value="Kelurahan Jatisari" placeholder="place now" disable>
         </div>
         <div class="inputBox" data-aos="zoom-in" data-aos-delay="450">
                 <span>NOP</span>
-                <input id="nopInput" name="nop" type="number" value="" placeholder="Nomor Objek Pajak (Tanpa Titik)">
+                <input id="nop" name="nop" type="number" value="" placeholder="Nomor Objek Pajak (Tanpa Titik)">
             </div>
 
             <!-- Add a call to the new JavaScript function on button click -->
-            <input type="button" value="Cek Sekarang" class="btn" data-aos="zoom-in" data-aos-delay="600" onclick="submitFormAndOpenIframe()">
+            <input type="button" value="Cek Sekarang" class="btn" data-aos="zoom-in" data-aos-delay="600" onclick="submitForm()">
         </form>
 
 <script>
@@ -120,12 +103,11 @@
   const currentDate = new Date().toISOString().split('T')[0];
 
   // Set the current date as the default value for the date input
-  document.getElementById('myDateInput').value = currentDate;
+  document.getElementById('tanggal').value = currentDate;
 </script>
 
 
-</br>
-<iframe src="about:blank" frameborder="0" width="100%" height="500" id="myIframe"></iframe>
+
 
 </section>
 <!-- booking form section ends -->
